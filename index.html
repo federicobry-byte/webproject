@@ -1,0 +1,1439 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="theme-color" content="#08070f">
+  <title>Happy Birthday, Andrea 🎃🎂</title>
+
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Space+Mono:wght@400;700&family=Dancing+Script:wght@600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+/* =====================================================
+   TOKENS
+===================================================== */
+:root {
+  --bg:       #08070f;
+  --bg2:      #0f0d1c;
+  --bg3:      #160e26;
+  --pink:     #f74b8a;
+  --pink-d:   #c03870;
+  --pink-l:   #ffb3d4;
+  --pink-bg:  rgba(247,75,138,.07);
+  --pink-bdr: rgba(247,75,138,.22);
+  --red:      #b91c3a;
+  --red-l:    #e83358;
+  --crimson:  #7d0016;
+  --gold:     #ffd054;
+  --gold-d:   #a07a00;
+  --gold-bg:  rgba(255,208,84,.05);
+  --gold-bdr: rgba(255,208,84,.2);
+  --text:     #eedcf5;
+  --text-m:   #b89fd0;
+  --text-d:   #7a6a92;
+
+}
+
+/* =====================================================
+   RESET & BASE
+===================================================== */
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+html { font-size:16px; -webkit-text-size-adjust:100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+::-webkit-scrollbar { width:3px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb { background:var(--pink-d); border-radius:2px; }
+
+/* =====================================================
+   PAGE SYSTEM
+===================================================== */
+.page {
+  display: none;
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+}
+.page.active {
+  display: flex;
+  animation: pg-in .65s ease;
+}
+@keyframes pg-in {
+  from { opacity:0; transform:translateY(16px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* =====================================================
+   SHARED ELEMENTS — BUTTONS
+===================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 28px;
+  border: 1.5px solid var(--pink);
+  background: transparent;
+  color: var(--pink);
+  font-family: 'Space Mono', monospace;
+  font-size: clamp(.65rem,2vw,.82rem);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: color .28s, box-shadow .28s;
+  position: relative;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn::before {
+  content:'';
+  position:absolute;
+  inset:0;
+  background:var(--pink);
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform .28s ease;
+  z-index:-1;
+}
+.btn:hover::before,
+.btn:active::before { transform:scaleX(1); }
+.btn:hover, .btn:active {
+  color:#fff;
+  box-shadow:0 0 22px rgba(247,75,138,.45);
+}
+.btn.gold {
+  border-color:var(--gold);
+  color:var(--gold);
+}
+.btn.gold::before { background:var(--gold); }
+.btn.gold:hover, .btn.gold:active {
+  color:#000;
+  box-shadow:0 0 22px rgba(255,208,84,.45);
+}
+.btn.sm { padding:9px 20px; font-size:clamp(.6rem,1.8vw,.75rem); }
+
+/* =====================================================
+   NAV DOTS
+===================================================== */
+#nav-dots {
+  position: fixed;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 1000;
+}
+.nd {
+  width:8px; height:8px;
+  border-radius:50%;
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(247,75,138,.25);
+  cursor:pointer;
+  transition:all .3s;
+  -webkit-tap-highlight-color:transparent;
+}
+.nd.on {
+  background:var(--pink);
+  transform:scale(1.5);
+  box-shadow:0 0 8px rgba(247,75,138,.7);
+}
+
+/* terminal CSS removed */
+
+/* =====================================================
+   PAGE 2 — LANDING
+===================================================== */
+#p-land {
+  background:radial-gradient(ellipse at 65% 28%, #1e0838 0%, #0e0420 45%, #050009 100%);
+  justify-content:center;
+  text-align:center;
+  padding:70px 24px;
+  overflow:hidden;
+}
+/* Moon */
+.moon {
+  position:absolute;
+  top:clamp(24px,5vw,44px);
+  right:clamp(16px,8vw,80px);
+  width:clamp(64px,15vw,128px);
+  height:clamp(64px,15vw,128px);
+  border-radius:50%;
+  background:radial-gradient(circle at 35% 32%, #fff6d0, #f4d560);
+  box-shadow:0 0 55px rgba(244,213,96,.4), 0 0 110px rgba(244,213,96,.15);
+  animation:moon-glow 4s ease-in-out infinite alternate;
+  pointer-events:none;
+}
+@keyframes moon-glow {
+  to { box-shadow:0 0 80px rgba(244,213,96,.6), 0 0 160px rgba(244,213,96,.2); }
+}
+/* Spider webs */
+.web {
+  position:absolute;
+  top:0;
+  width:min(130px,26vw);
+  height:min(130px,26vw);
+  pointer-events:none;
+  opacity:.22;
+}
+.web.tl { left:0; }
+.web.tr { right:0; transform:scaleX(-1); }
+/* Stars */
+#stars-el {
+  position:absolute; inset:0;
+  pointer-events:none; overflow:hidden;
+}
+.star {
+  position:absolute;
+  border-radius:50%;
+  background:#fff;
+  animation:twinkle var(--d,2.5s) ease-in-out infinite;
+  animation-delay:var(--dl,0s);
+}
+@keyframes twinkle {
+  0%,100%{opacity:.15;transform:scale(1);}
+  50%{opacity:1;transform:scale(1.8);}
+}
+/* Bats */
+.bat {
+  position:fixed;
+  top:var(--t,20%);
+  left:0;
+  pointer-events:none;
+  z-index:3;
+  opacity:0;
+  font-size:var(--sz,1.1rem);
+  animation:bat-fly var(--d,9s) linear infinite;
+  animation-delay:var(--dl,0s);
+}
+@keyframes bat-fly {
+  0%   { transform:translateX(-9vw) translateY(0); opacity:0; }
+  6%   { opacity:1; }
+  30%  { transform:translateX(28vw) translateY(-14px); }
+  55%  { transform:translateX(55vw) translateY(6px); }
+  78%  { transform:translateX(82vw) translateY(-10px); }
+  94%  { opacity:1; }
+  100% { transform:translateX(110vw) translateY(0); opacity:0; }
+}
+/* Landing copy */
+.land-inner { position:relative; z-index:2; max-width:780px; }
+.badge {
+  display:inline-block;
+  padding:6px 20px;
+  border:1px solid rgba(247,75,138,.3);
+  border-radius:100px;
+  font-family:'Space Mono',monospace;
+  font-size:clamp(.58rem,1.7vw,.72rem);
+  letter-spacing:2px;
+  color:var(--pink);
+  margin-bottom:30px;
+  animation:badge-pulse 2.8s ease-in-out infinite;
+}
+@keyframes badge-pulse {
+  0%,100%{border-color:rgba(247,75,138,.2);}
+  50%{border-color:rgba(247,75,138,.65);}
+}
+.land-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.8rem,10vw,5.8rem);
+  font-weight:700;
+  line-height:1.03;
+  margin-bottom:14px;
+}
+.land-title .name {
+  display:block;
+  background:linear-gradient(128deg, var(--pink), var(--red-l,#e83358), var(--pink-l));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.land-sub {
+  font-family:'Dancing Script',cursive;
+  font-size:clamp(1.05rem,3.5vw,1.65rem);
+  color:var(--text-m);
+  margin-bottom:30px;
+}
+.chips {
+  display:flex; flex-wrap:wrap;
+  gap:9px; justify-content:center;
+  margin-bottom:44px;
+}
+.chip {
+  padding:5px 14px;
+  border:1px solid var(--pink-bdr);
+  border-radius:100px;
+  font-size:clamp(.68rem,1.9vw,.78rem);
+  color:var(--text-m);
+  background:var(--pink-bg);
+}
+
+/* =====================================================
+   PAGE 3 — LETTER / ENVELOPE
+===================================================== */
+#p-letter {
+  background:var(--bg2);
+  justify-content:flex-start;
+  padding:54px 20px 60px;
+}
+.letter-scene {
+  display:flex; flex-direction:column;
+  align-items:center; gap:24px;
+  width:100%; max-width:560px;
+}
+.sec-eye {
+  font-family:'Space Mono',monospace;
+  font-size:.68rem; color:var(--pink);
+  letter-spacing:3px; text-transform:uppercase;
+}
+.sec-h {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.5rem,4.5vw,2.2rem);
+  text-align:center;
+}
+.sec-h em { color:var(--pink); font-style:italic; }
+.hint {
+  font-family:'Space Mono',monospace;
+  font-size:.73rem; color:var(--text-d);
+  animation:hint-bob 2.2s ease-in-out infinite;
+}
+@keyframes hint-bob { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-5px);} }
+
+/* Envelope */
+.env-outer {
+  width:min(390px,88vw);
+  height:min(255px,57vw);
+  position:relative;
+  cursor:pointer;
+  box-shadow:0 14px 38px rgba(0,0,0,.8), 0 0 22px rgba(247,75,138,.12);
+  transition:transform .3s, box-shadow .3s, opacity .5s;
+  flex-shrink:0;
+  border-radius:4px;
+  overflow:visible;
+}
+.env-outer:hover {
+  transform:translateY(-8px);
+  box-shadow:0 22px 50px rgba(0,0,0,.85), 0 0 30px rgba(247,75,138,.28);
+}
+.env-outer.open {
+  opacity:0;
+  transform:translateY(-20px) scale(0.96);
+  pointer-events:none;
+}
+.env-body-svg {
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  pointer-events:none;
+}
+.env-flap {
+  position:absolute;
+  top:0; left:0;
+  width:100%; height:50%;
+  pointer-events:none;
+}
+.env-flap svg { width:100%; height:100%; display:block; }
+/* Wax seal */
+.seal {
+  position:absolute;
+  bottom:-22px; left:50%;
+  transform:translateX(-50%);
+  width:clamp(40px,9vw,50px);
+  height:clamp(40px,9vw,50px);
+  border-radius:50%;
+  background:radial-gradient(circle, var(--red-l,#e83358), var(--crimson));
+  border:2px solid rgba(255,80,80,.5);
+  display:flex; align-items:center; justify-content:center;
+  font-size:clamp(.95rem,2.3vw,1.25rem);
+  box-shadow:0 0 14px rgba(183,28,58,.7);
+  pointer-events:none;
+}
+/* Letter peeking from envelope */
+.env-peek {
+  position:absolute;
+  bottom:8px; left:50%;
+  transform:translateX(-50%);
+  width:81%;
+  background:#f7f2ec;
+  border-radius:2px;
+  padding:9px 11px;
+  z-index:5;
+  pointer-events:none;
+}
+.peek-ln {
+  height:4px; border-radius:2px;
+  background:#ddd8d0; margin-bottom:6px;
+}
+
+/* Full letter */
+.full-letter {
+  display:none;
+  width:min(570px,97vw);
+  background:#f7f2ec;
+  color:#281a12;
+  border-radius:4px;
+  padding:clamp(20px,6vw,50px);
+  max-height:74vh;
+  overflow-y:auto;
+  box-shadow:0 28px 80px rgba(0,0,0,.7);
+  position:relative;
+  animation:letter-rise .5s ease;
+}
+@keyframes letter-rise {
+  from{transform:scaleY(.35) translateY(30px);opacity:0;}
+  to{transform:scaleY(1) translateY(0);opacity:1;}
+}
+.full-letter.show { display:block; }
+.l-code {
+  font-family:'Space Mono',monospace;
+  font-size:clamp(.55rem,1.6vw,.68rem);
+  color:#9a8a82;
+  background:#ede8e0;
+  padding:10px 14px;
+  border-radius:3px;
+  border-left:3px solid var(--pink-d);
+  line-height:1.9;
+  margin-bottom:22px;
+}
+.l-salut {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.25rem,4vw,1.9rem);
+  font-style:italic;
+  color:#800020;
+  margin-bottom:16px;
+}
+.l-body {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(.86rem,2.4vw,1.04rem);
+  line-height:1.95;
+}
+.l-body p { margin-bottom:15px; }
+.l-body em { font-style:italic; color:#7a0020; }
+.l-body code {
+  font-family:'Space Mono',monospace;
+  font-size:.83em;
+  background:#ede8e0;
+  padding:1px 5px;
+  border-radius:2px;
+  color:#6a1a30;
+}
+.l-hr { border:none; border-top:1px solid #d8d0c8; margin:18px 0; }
+.l-sign {
+  font-family:'Dancing Script',cursive;
+  font-size:clamp(1.1rem,3.5vw,1.5rem);
+  color:#800020;
+  text-align:right;
+  margin-top:22px;
+  line-height:1.65;
+}
+.l-rose {
+  position:absolute; top:14px; right:18px;
+  font-size:clamp(1.2rem,3vw,1.6rem);
+  opacity:.3;
+}
+
+/* =====================================================
+   PAGE 4 — POEM
+===================================================== */
+#p-poem {
+  background:linear-gradient(158deg, #06000e, #120422, #070010);
+  justify-content:flex-start;
+  padding:60px 24px 70px;
+  overflow:hidden;
+}
+#poem-stars {
+  position:absolute; inset:0;
+  pointer-events:none; overflow:hidden;
+}
+.poem-wrap {
+  position:relative; z-index:2;
+  max-width:min(630px,95vw);
+  text-align:center;
+}
+.poem-eye {
+  font-family:'Space Mono',monospace;
+  font-size:.68rem; color:var(--pink);
+  letter-spacing:3.5px; text-transform:uppercase;
+  margin-bottom:6px;
+}
+.poem-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.6rem,5.5vw,2.9rem);
+  font-style:italic;
+  line-height:1.2;
+  margin-bottom:50px;
+}
+.poem-title em { color:var(--pink); font-style:normal; }
+.stanza {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(.86rem,2.4vw,1.08rem);
+  line-height:2.2;
+  color:var(--text-m);
+  margin-bottom:32px;
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .7s ease, transform .7s ease;
+}
+.stanza.show { opacity:1; transform:none; }
+.stanza em { color:var(--pink-l); }
+.sep {
+  display:block;
+  letter-spacing:10px;
+  color:var(--pink);
+  font-size:1rem;
+  margin-bottom:28px;
+  opacity:0;
+  transition:opacity .6s ease;
+}
+.sep.show { opacity:.4; }
+.poem-close {
+  font-family:'Dancing Script',cursive;
+  font-size:clamp(1.15rem,3.5vw,1.65rem);
+  color:var(--pink);
+  opacity:0;
+  margin-top:10px;
+  transition:opacity .8s ease;
+}
+.poem-close.show { opacity:1; }
+.poem-btn-wrap {
+  opacity:0;
+  margin-top:38px;
+  transition:opacity .7s ease;
+}
+.poem-btn-wrap.show { opacity:1; }
+
+/* =====================================================
+   PAGE 5 — ABOUT
+===================================================== */
+#p-about {
+  background:linear-gradient(138deg, #100622, #0c0416, #0a0a1c);
+  justify-content:flex-start;
+  padding:60px 20px 70px;
+}
+.about-wrap {
+  width:100%;
+  max-width:min(780px,97vw);
+  position:relative; z-index:2;
+}
+.about-hdr { margin-bottom:36px; }
+.about-hdr .sec-eye { margin-bottom:6px; }
+.about-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.65rem,5vw,2.7rem);
+  margin-bottom:6px;
+}
+.about-title em { color:var(--pink); font-style:italic; }
+.about-sub { font-size:.84rem; color:var(--text-d); }
+.cards-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(min(230px,100%),1fr));
+  gap:14px;
+}
+.acard {
+  background:var(--pink-bg);
+  border:1px solid var(--pink-bdr);
+  border-radius:10px;
+  padding:20px 18px;
+  opacity:0;
+  transform:translateY(22px);
+  transition:opacity .5s ease, transform .5s ease, border-color .3s, background .3s;
+}
+.acard.show { opacity:1; transform:none; }
+.acard.show:hover {
+  border-color:rgba(247,75,138,.5);
+  background:rgba(247,75,138,.12);
+  transform:translateY(-4px);
+}
+.acard-icon { font-size:1.75rem; margin-bottom:10px; display:block; }
+.acard-lbl {
+  font-family:'Space Mono',monospace;
+  font-size:.67rem; color:var(--pink);
+  letter-spacing:1.5px; text-transform:uppercase;
+  margin-bottom:8px;
+}
+.acard-txt { font-size:.84rem; color:var(--text-m); line-height:1.65; }
+
+/* =====================================================
+   PAGE 6 — METALLICA
+===================================================== */
+#p-metal {
+  background:linear-gradient(158deg, #060304, #0c0606, #090409);
+  justify-content:flex-start;
+  padding:60px 20px 70px;
+  overflow:hidden;
+}
+.metal-bg {
+  position:absolute; inset:0;
+  pointer-events:none;
+}
+.note {
+  position:absolute;
+  bottom:10%;
+  left:var(--l,50%);
+  font-size:var(--sz,1.1rem);
+  opacity:0;
+  animation:note-rise var(--d,5s) ease-in-out infinite;
+  animation-delay:var(--dl,0s);
+}
+@keyframes note-rise {
+  0%   { opacity:0; transform:translateY(0) rotate(0deg); }
+  20%  { opacity:.65; }
+  80%  { opacity:.65; }
+  100% { opacity:0; transform:translateY(-180px) rotate(18deg); }
+}
+/* Lightning flashes */
+.lgt {
+  position:absolute;
+  top:0;
+  left:var(--l,50%);
+  width:2px;
+  background:linear-gradient(to bottom, transparent, var(--gold), transparent);
+  opacity:0;
+  animation:lgt-flash var(--d,5s) ease-in-out infinite;
+  animation-delay:var(--dl,0s);
+  pointer-events:none;
+}
+@keyframes lgt-flash {
+  0%,100%{opacity:0;height:0;}
+  52%{opacity:0;}
+  55%{opacity:.9;height:110px;}
+  58%{opacity:0;}
+  62%{opacity:.6;height:70px;}
+  65%{opacity:0;}
+}
+.metal-hdr {
+  text-align:center;
+  margin-bottom:42px;
+  position:relative; z-index:2;
+}
+.metal-eye {
+  font-family:'Space Mono',monospace;
+  font-size:.7rem; color:var(--gold-d);
+  letter-spacing:4px; text-transform:uppercase;
+  margin-bottom:10px;
+}
+.metal-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.8rem,6vw,3.2rem);
+  line-height:1.15;
+}
+.metal-title em { color:var(--gold); font-style:normal; }
+.metal-sub {
+  margin-top:8px;
+  font-family:'Space Mono',monospace;
+  font-size:.72rem;
+  color:var(--text-d);
+}
+.songs {
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(min(260px,100%),1fr));
+  gap:18px;
+  max-width:min(960px,97vw);
+  width:100%;
+  position:relative; z-index:2;
+}
+.song {
+  background:var(--gold-bg);
+  border:1px solid var(--gold-bdr);
+  border-radius:10px;
+  padding:24px 20px;
+  position:relative;
+  overflow:hidden;
+  transition:transform .3s, border-color .3s;
+}
+.song::before {
+  content:'';
+  position:absolute; inset:0;
+  background:linear-gradient(138deg, rgba(255,208,84,.04), transparent);
+  opacity:0;
+  transition:opacity .3s;
+  border-radius:10px;
+}
+.song:hover { transform:translateY(-5px); border-color:rgba(255,208,84,.45); }
+.song:hover::before { opacity:1; }
+.song-no {
+  font-family:'Space Mono',monospace;
+  font-size:.6rem; color:var(--gold-d);
+  letter-spacing:2px; margin-bottom:12px;
+}
+.song-art { font-size:clamp(2rem,5.5vw,2.8rem); margin-bottom:14px; display:block; }
+.song-name {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.05rem,3vw,1.4rem);
+  color:var(--gold);
+  margin-bottom:4px;
+}
+.song-album {
+  font-family:'Space Mono',monospace;
+  font-size:.62rem; color:#606060;
+  margin-bottom:14px;
+}
+.song-desc { font-size:.84rem; color:var(--text-m); line-height:1.75; margin-bottom:14px; }
+.song-why {
+  background:rgba(255,208,84,.05);
+  border-left:2px solid var(--gold);
+  padding:9px 13px;
+  font-size:.79rem;
+  color:var(--text-m);
+  border-radius:0 4px 4px 0;
+  font-style:italic;
+}
+.song-why strong { color:var(--gold); font-style:normal; }
+
+/* =====================================================
+   PAGE 7 — FINALE
+===================================================== */
+#p-final {
+  background:radial-gradient(ellipse at center, #1c0a24, #08000e);
+  justify-content:center;
+  text-align:center;
+  padding:60px 20px;
+  overflow:hidden;
+}
+.final-wrap { z-index:2; position:relative; max-width:min(700px,97vw); }
+.cake-em {
+  font-size:clamp(4rem,14vw,7rem);
+  display:block;
+  margin-bottom:18px;
+  animation:cake-jump 2s ease-in-out infinite;
+}
+@keyframes cake-jump {
+  0%,100%{transform:translateY(0) scale(1);}
+  50%{transform:translateY(-14px) scale(1.06);}
+}
+/* Candle row */
+.candles {
+  display:flex;
+  justify-content:center;
+  align-items:flex-end;
+  gap:clamp(2px,1vw,5px);
+  flex-wrap:wrap;
+  margin-bottom:30px;
+}
+.candle { display:flex; flex-direction:column; align-items:center; }
+.flame {
+  width:clamp(5px,1.5vw,8px);
+  height:clamp(9px,2.5vw,13px);
+  background:radial-gradient(ellipse, #fff 0%, #ffd700 30%, #ff4500 75%, transparent 100%);
+  border-radius:50% 50% 25% 25%;
+  animation:flicker .45s ease-in-out infinite alternate;
+}
+.candle:nth-child(odd) .flame  { animation-delay:.12s; }
+.candle:nth-child(3n) .flame   { animation-delay:.25s; }
+@keyframes flicker {
+  from{transform:scaleX(1) rotate(-2deg);}
+  to{transform:scaleX(.82) scaleY(1.12) rotate(2deg);}
+}
+.wick { width:2px; height:5px; background:#444; }
+.cstick {
+  width:clamp(8px,2vw,11px);
+  height:clamp(26px,6vw,36px);
+  background:linear-gradient(to right, var(--pink), var(--pink-d), var(--pink));
+  border-radius:2px;
+}
+/* Final copy */
+.final-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,7vw,4rem);
+  font-style:italic;
+  line-height:1.1;
+  margin-bottom:8px;
+}
+.final-sub {
+  font-family:'Dancing Script',cursive;
+  font-size:clamp(1.4rem,4.5vw,2.2rem);
+  color:var(--pink);
+  margin-bottom:24px;
+}
+.final-msg {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(.86rem,2.4vw,1.05rem);
+  color:var(--text-m);
+  line-height:1.95;
+  max-width:520px;
+  margin:0 auto 36px;
+}
+.ftags {
+  display:flex; flex-wrap:wrap;
+  gap:8px; justify-content:center;
+  margin-bottom:38px;
+}
+.ftag {
+  padding:5px 13px;
+  border:1px solid var(--pink-bdr);
+  border-radius:100px;
+  font-size:.76rem;
+  color:var(--text-m);
+  background:var(--pink-bg);
+}
+.credit {
+  margin-top:26px;
+  font-family:'Space Mono',monospace;
+  font-size:.63rem;
+  color:var(--text-d);
+}
+
+/* =====================================================
+   RESPONSIVE EXTRAS
+===================================================== */
+@media (max-width:480px) {
+  #nav-dots { right:7px; }
+  .web { width:80px; height:80px; }
+  .land-title { font-size:clamp(2.4rem,11vw,3.8rem); }
+}
+@media (prefers-reduced-motion:reduce) {
+  *,*::before,*::after { animation-duration:.01ms !important; transition-duration:.01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV DOTS -->
+<nav id="nav-dots" aria-label="Slide navigation">
+  <div class="nd on"  onclick="gp(0)" title="Welcome"></div>
+  <div class="nd"     onclick="gp(1)" title="Letter"></div>
+  <div class="nd"     onclick="gp(2)" title="Poem"></div>
+  <div class="nd"     onclick="gp(3)" title="About"></div>
+  <div class="nd"     onclick="gp(4)" title="Music"></div>
+  <div class="nd"     onclick="gp(5)" title="Finale"></div>
+</nav>
+
+<!-- ══════════════════════════════════════════════
+     PAGE 1 · LANDING
+══════════════════════════════════════════════ -->
+<section class="page active" id="p-land">
+
+  <!-- Moon -->
+  <div class="moon"></div>
+
+  <!-- Spider webs -->
+  <svg class="web tl" viewBox="0 0 130 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="rgba(247,75,138,.75)" stroke-width=".55">
+      <line x1="0" y1="0" x2="130" y2="130"/>
+      <line x1="0" y1="0" x2="90"  y2="130"/>
+      <line x1="0" y1="0" x2="45"  y2="130"/>
+      <line x1="0" y1="0" x2="130" y2="90"/>
+      <line x1="0" y1="0" x2="130" y2="45"/>
+      <circle cx="0" cy="0" r="32"  stroke-opacity=".45"/>
+      <circle cx="0" cy="0" r="60"  stroke-opacity=".28"/>
+      <circle cx="0" cy="0" r="95"  stroke-opacity=".14"/>
+      <circle cx="38" cy="38" r="4" fill="rgba(247,75,138,.55)" stroke="none"/>
+    </g>
+  </svg>
+  <svg class="web tr" viewBox="0 0 130 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="rgba(247,75,138,.75)" stroke-width=".55">
+      <line x1="0" y1="0" x2="130" y2="130"/>
+      <line x1="0" y1="0" x2="90"  y2="130"/>
+      <line x1="0" y1="0" x2="45"  y2="130"/>
+      <line x1="0" y1="0" x2="130" y2="90"/>
+      <line x1="0" y1="0" x2="130" y2="45"/>
+      <circle cx="0" cy="0" r="32"  stroke-opacity=".45"/>
+      <circle cx="0" cy="0" r="60"  stroke-opacity=".28"/>
+      <circle cx="0" cy="0" r="95"  stroke-opacity=".14"/>
+      <circle cx="38" cy="38" r="4" fill="rgba(247,75,138,.55)" stroke="none"/>
+    </g>
+  </svg>
+
+  <!-- Stars container -->
+  <div id="stars-el"></div>
+
+  <!-- Landing content -->
+  <div class="land-inner">
+    <div class="badge">October 30  |  Halloween Eve  |  Turning 18</div>
+
+    <h1 class="land-title">
+      Happy Birthday,
+      <span class="name">Andrea.</span>
+    </h1>
+
+    <p class="land-sub">Ms. "Cool kasi bday ko sa Halloween Eve"</p>
+
+    <div class="chips">
+      <span class="chip">BSIT 1st Year</span>
+      <span class="chip">Reader &amp; Novelist</span>
+      <span class="chip">Metalhead</span>
+      <span class="chip">Horror Fan</span>
+      <span class="chip">Dog Person</span>
+    </div>
+
+    <button class="btn" onclick="gp(1)">Open Your Letter</button>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     PAGE 3 · LETTER & ENVELOPE
+══════════════════════════════════════════════ -->
+<section class="page" id="p-letter">
+  <div class="letter-scene">
+
+    <div style="text-align:center;">
+      <div class="sec-eye">For You</div>
+      <h2 class="sec-h">A Letter, <em>Andrea.</em></h2>
+    </div>
+
+    <p class="hint" id="env-hint">Click the envelope to open it</p>
+
+    <!-- ─── ENVELOPE ─── -->
+    <div class="env-outer" id="env-outer" onclick="openEnvelope()" role="button" aria-label="Open envelope">
+
+      <!-- Body: SVG draws the V-fold interior -->
+      <svg class="env-body-svg" viewBox="0 0 390 255" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <!-- Envelope base -->
+        <rect width="390" height="255" rx="4" fill="#280814" stroke="rgba(247,75,138,.22)" stroke-width="1"/>
+        <!-- Interior shading triangles -->
+        <polygon points="0,0 0,255 195,127"   fill="#320e1c"/>
+        <polygon points="390,0 390,255 195,127" fill="#320e1c"/>
+        <polygon points="0,255 390,255 195,127" fill="#3c1224"/>
+        <!-- Seam lines -->
+        <line x1="0"   y1="0"   x2="195" y2="127" stroke="rgba(247,75,138,.14)" stroke-width=".8"/>
+        <line x1="390" y1="0"   x2="195" y2="127" stroke="rgba(247,75,138,.14)" stroke-width=".8"/>
+        <line x1="0"   y1="255" x2="195" y2="127" stroke="rgba(247,75,138,.14)" stroke-width=".8"/>
+        <line x1="390" y1="255" x2="195" y2="127" stroke="rgba(247,75,138,.14)" stroke-width=".8"/>
+        <!-- Top edge line -->
+        <line x1="0" y1="0" x2="390" y2="0" stroke="rgba(247,75,138,.2)" stroke-width=".8"/>
+      </svg>
+
+      <!-- Flap (top triangle — opens with rotateX) -->
+      <div class="env-flap" id="env-flap">
+        <svg viewBox="0 0 390 128" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <polygon points="0,0 390,0 195,128" fill="#4a1630"/>
+          <line x1="0"   y1="0" x2="195" y2="128" stroke="rgba(247,75,138,.18)" stroke-width=".8"/>
+          <line x1="390" y1="0" x2="195" y2="128" stroke="rgba(247,75,138,.18)" stroke-width=".8"/>
+          <line x1="0"   y1="0" x2="390" y2="0"   stroke="rgba(247,75,138,.22)" stroke-width=".8"/>
+        </svg>
+        <!-- Wax seal centered on flap -->
+        <div class="seal" id="env-seal">A</div>
+      </div>
+
+      <!-- Letter peek from inside -->
+      <div class="env-peek" id="env-peek">
+        <div class="peek-ln" style="width:100%"></div>
+        <div class="peek-ln" style="width:87%"></div>
+        <div class="peek-ln" style="width:62%"></div>
+      </div>
+    </div>
+
+    <!-- ─── FULL LETTER ─── -->
+    <div class="full-letter" id="full-letter" style="display:none;">
+      <span class="l-rose"></span>
+
+      <div class="l-code">
+        To: Andrea Weber<br>
+        From: Federico Bry<br>
+        Date: October 30, 2026
+      </div>
+
+      <h3 class="l-salut">Dear Andrea,</h3>
+
+      <div class="l-body">
+        <p>Happy Birthday! Turning 18 on Halloween Eve is honestly such a you thing.</p>
+
+        <p>I don't have much to say except, you're a good person to be around and I'm glad we're in the same class. Hope this year is good to you, finish that novel, eat good food, and enjoy your day.</p>
+
+        <p>That's it. Happy 18th.</p>
+      </div>
+
+      <div class="l-sign">
+        Federico Bry
+      </div>
+
+      <div style="text-align:center; margin-top:30px;">
+        <button class="btn" onclick="gp(2)">Next Page</button>
+      </div>
+    </div>
+
+  </div><!-- /letter-scene -->
+</section>
+
+<!-- ══════════════════════════════════════════════
+     PAGE 4 · POEM
+══════════════════════════════════════════════ -->
+<section class="page" id="p-poem">
+  <div id="poem-stars"></div>
+
+  <div class="poem-wrap">
+    <div class="poem-eye">A Poem</div>
+    <h2 class="poem-title">"The Girl Who <em>Chose Her World</em>"</h2>
+
+    <div class="stanza" id="s1">
+      Born beneath a Halloween sky,<br>
+      while the world dressed up in disguise,<br>
+      <em>you arrived, no costume, no mask,</em><br>
+      just you, in your own quiet grace.
+    </div>
+    <span class="sep" id="d1">~ ~ ~</span>
+
+    <div class="stanza" id="s2">
+      She reads in the language of pages,<br>
+      she writes in worlds only she knows,<br>
+      <em>she watches monsters for comfort,</em><br>
+      while other hearts run from the shadows.
+    </div>
+    <span class="sep" id="d2">~ ~ ~</span>
+
+    <div class="stanza" id="s3">
+      She's not lost, she's just <em>elsewhere,</em><br>
+      in a world too real for crowded noise,<br>
+      her peace is a fortress she built herself,<br>
+      and you can't break what she chose to enjoy.
+    </div>
+    <span class="sep" id="d3">~ ~ ~</span>
+
+    <div class="stanza" id="s4">
+      Here's to the girl who's nonchalant and sweet,<br>
+      who loves her dogs and her old OPM,<br>
+      <em>who eats her fries and reacts to messages,</em><br>
+      and somehow makes it all look effortless.
+    </div>
+    <span class="sep" id="d4">~ ~ ~</span>
+
+    <div class="stanza" id="s5">
+      <em>Happy Birthday, Andrea.</em><br>
+      Stay exactly who you are,<br>
+      you are the kind of rare<br>
+      the world doesn't quite understand yet.
+    </div>
+
+    <p class="poem-close" id="p-close">October 30, 2026</p>
+
+    <div class="poem-btn-wrap" id="p-btn">
+      <button class="btn" onclick="gp(3)">Next Page</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     PAGE 5 · ABOUT
+══════════════════════════════════════════════ -->
+<section class="page" id="p-about">
+  <div class="about-wrap">
+
+    <div class="about-hdr">
+      <div class="sec-eye">Because You're Worth Knowing</div>
+      <h2 class="about-title">The <em>Andrea</em> Files</h2>
+      <p class="about-sub">A collection of things that make you, you.</p>
+    </div>
+
+    <div class="cards-grid">
+
+      <div class="acard">
+        <div class="acard-lbl">The Reader</div>
+        <div class="acard-txt">She disappears into books like most people disappear into their phones. Except her version is better, she comes out with entire worlds inside her head.</div>
+      </div>
+
+      <div class="acard">
+        <div class="acard-lbl">The Novelist</div>
+        <div class="acard-txt">She writes novels. Not just diary entries or school essays, actual stories, actual characters. There's an entire universe inside that quiet mind of hers.</div>
+      </div>
+
+      <div class="acard">
+        <div class="acard-lbl">Horror Enthusiast</div>
+        <div class="acard-txt">Where most people hide under blankets, she watches horror films with the calm focus of a film critic. Monsters don't scare her. Mediocrity might.</div>
+      </div>
+
+      <div class="acard">
+        <div class="acard-lbl">OPM + Rock Soul</div>
+        <div class="acard-txt">Filipino old songs, rap, and Metallica. Her playlist is a whole personality, classic, deep, heavy, and somehow perfectly her all at once.</div>
+      </div>
+
+      <div class="acard">
+        <div class="acard-lbl">Dog Person</div>
+        <div class="acard-txt">Dogs just get it. They don't ask too many questions, they're loyal, they love unconditionally, and they also don't reply to messages. Perfect match.</div>
+      </div>
+
+      <div class="acard">
+        <div class="acard-lbl">Certified Food Lover</div>
+        <div class="acard-txt">Fries, chicken breast, chicken tenders. The holy trinity. She eats well and she deserves every crispy, golden, perfectly seasoned bite of it.</div>
+      </div>
+
+      <div class="acard">
+        <div class="acard-lbl">Protector of Peace</div>
+        <div class="acard-txt">She has her own world, quiet, intentional, no room for unnecessary noise. She's not cold, she's just selective. Which, for the record, is power.</div>
+      </div>
+
+      <div class="acard">
+        <div class="acard-lbl">BSIT 1st Year</div>
+        <div class="acard-txt">Out here surviving lectures, debugging sessions, and code that refuses to compile. Future dev? Future tech novelist? Either way, absolutely iconic.</div>
+      </div>
+
+    </div>
+
+    <div style="text-align:center; margin-top:40px;">
+      <button class="btn" onclick="gp(4)">Metallica Corner</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     PAGE 6 · METALLICA
+══════════════════════════════════════════════ -->
+<section class="page" id="p-metal">
+
+  <!-- Decorative bg (notes + lightning added by JS) -->
+  <div class="metal-bg" id="metal-bg"></div>
+
+  <div class="metal-hdr">
+    <div class="metal-eye">For the Metalhead in You</div>
+    <h2 class="metal-title">Three Songs for <em>Andrea</em></h2>
+    <p class="metal-sub">Because some things are better explained by Metallica.</p>
+  </div>
+
+  <div class="songs">
+
+    <div class="song">
+      <div class="song-no">TRACK 01</div>
+      <div class="song-name">Enter Sandman</div>
+      <div class="song-album">Metallica / Black Album / 1991</div>
+      <div class="song-desc">A haunting, relentless anthem built for the hours between midnight and dawn. Dark imagery, unstoppable groove, and a mood that belongs at the edge of Halloween, exactly where your birthday lives.</div>
+      <div class="song-why"><strong>For Andrea:</strong> Born on Halloween Eve? The universe was literally playing this track. Your birthday literally has its own Metallica theme song.</div>
+    </div>
+
+    <div class="song">
+      <div class="song-no">TRACK 02</div>
+      <div class="song-name">Nothing Else Matters</div>
+      <div class="song-album">Metallica / Black Album / 1991</div>
+      <div class="song-desc">Metallica stripped down to their most vulnerable, genuinely not caring what the world thinks while still holding space for what truly matters. Quiet, real, and unexpectedly deep.</div>
+      <div class="song-why"><strong>For Andrea:</strong> Nonchalant by nature, protective of her peace, happy in her own world. She already lives this song's energy every single day.</div>
+    </div>
+
+    <div class="song">
+      <div class="song-no">TRACK 03</div>
+      <div class="song-name">The Unforgiven</div>
+      <div class="song-album">Metallica / Black Album / 1991</div>
+      <div class="song-desc">A sweeping, cinematic ballad about someone who lives entirely on their own terms, refusing to be defined by what others expect of them, building identity from the inside out.</div>
+      <div class="song-why"><strong>For Andrea:</strong> She doesn't follow the crowd. She doesn't get easily attached. She lives by her own rules. This song was written for exactly that kind of person.</div>
+    </div>
+
+  </div>
+
+  <div style="text-align:center; margin-top:46px; position:relative; z-index:2;">
+    <button class="btn gold" onclick="gp(5)">One Last Thing</button>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     PAGE 7 · FINALE
+══════════════════════════════════════════════ -->
+<section class="page" id="p-final">
+  <div class="final-wrap">
+
+    <span class="cake-em">🎂</span>
+
+    <!-- 18 candles rendered by JS -->
+    <div class="candles" id="candles"></div>
+
+    <h2 class="final-title">Happy 18th Birthday</h2>
+    <p class="final-sub">Andrea Weber</p>
+
+    <p class="final-msg">
+      October 30 will always be yours, the Halloween Queen, the quiet novelist, the girl with a book, headphones, and a world entirely of her own making.
+      You don't need the spotlight. The spotlight finds you anyway.
+      <br><br>
+      Here's to 18 years of being exactly who you are, and to many more of peace, fries, Metallica at full volume, and stories only you can tell.
+    </p>
+
+    <div class="ftags">
+      <span class="ftag">Reader</span>
+      <span class="ftag">Novelist</span>
+      <span class="ftag">Horror Fan</span>
+      <span class="ftag">Metalhead</span>
+      <span class="ftag">Dog Person</span>
+      <span class="ftag">Fries Lover</span>
+      <span class="ftag">BSIT 1st Year</span>
+      <span class="ftag">Halloween Queen</span>
+    </div>
+
+    <button class="btn gold" id="celeb-btn" onclick="celebrate()">
+      Celebrate!
+    </button>
+
+    <p class="credit">Made by Federico Bry, October 2026</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     SCRIPT
+══════════════════════════════════════════════ -->
+<script>
+// PAGE NAVIGATION
+const PAGES = ['p-land','p-letter','p-poem','p-about','p-metal','p-final'];
+let cur = 0;
+
+function gp(i) {
+  document.getElementById(PAGES[cur]).classList.remove('active');
+  cur = i;
+  document.getElementById(PAGES[i]).classList.add('active');
+  window.scrollTo(0, 0);
+  updateDots();
+  switch (i) {
+    case 0: initLand();      break;
+    case 1: resetEnvelope(); break;
+    case 2: initPoem();      break;
+    case 3: initAbout();     break;
+    case 4: initMetal();     break;
+    case 5: initFinal();     break;
+  }
+}
+
+function updateDots() {
+  document.querySelectorAll('.nd').forEach((d, i) => d.classList.toggle('on', i === cur));
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' && cur < PAGES.length - 1) gp(cur + 1);
+  if (e.key === 'ArrowLeft'  && cur > 0)                gp(cur - 1);
+});
+
+// Init landing on load
+initLand();
+
+
+
+// PAGE: LANDING
+let landDone = false;
+function initLand() {
+  if (landDone) return;
+  landDone = true;
+
+  // Stars
+  const sEl = document.getElementById('stars-el');
+  for (let i = 0; i < 80; i++) {
+    const s = document.createElement('div');
+    const sz = Math.random() < 0.25 ? 2.5 : 1.5;
+    s.className = 'star';
+    s.style.cssText = `
+      left:${Math.random() * 100}%; top:${Math.random() * 100}%;
+      width:${sz}px; height:${sz}px;
+      --d:${(2 + Math.random() * 3).toFixed(1)}s;
+      --dl:${(Math.random() * 5).toFixed(1)}s;
+    `;
+    sEl.appendChild(s);
+  }
+
+  // Bats
+  const count = window.innerWidth < 480 ? 3 : 5;
+  for (let i = 0; i < count; i++) {
+    const b = document.createElement('div');
+    b.className = 'bat';
+    b.textContent = '🦇';
+    b.style.cssText = `
+      --t:${(5 + Math.random() * 58).toFixed(1)}%;
+      --d:${(7 + Math.random() * 9).toFixed(1)}s;
+      --dl:${(Math.random() * 12).toFixed(1)}s;
+      --sz:${(0.85 + Math.random() * 0.65).toFixed(2)}rem;
+    `;
+    document.body.appendChild(b);
+  }
+}
+
+// PAGE: ENVELOPE / LETTER
+function resetEnvelope() {
+  const outer  = document.getElementById('env-outer');
+  const hint   = document.getElementById('env-hint');
+  const fl     = document.getElementById('full-letter');
+  outer.classList.remove('open');
+  outer.style.display  = '';
+  outer.style.opacity  = '';
+  outer.style.transform = '';
+  hint.style.display   = '';
+  hint.style.opacity   = '1';
+  fl.classList.remove('show');
+  fl.style.display     = 'none';
+}
+
+function openEnvelope() {
+  const outer = document.getElementById('env-outer');
+  const hint  = document.getElementById('env-hint');
+  const fl    = document.getElementById('full-letter');
+
+  // Fade out hint
+  hint.style.transition = 'opacity .3s';
+  hint.style.opacity = '0';
+
+  // Add open class (triggers CSS fade+scale)
+  outer.classList.add('open');
+
+  // After envelope fades, show the letter
+  setTimeout(() => {
+    outer.style.display = 'none';
+    fl.style.display = 'block';
+    fl.classList.add('show');
+    fl.scrollTop = 0;
+  }, 550);
+}
+
+// PAGE: POEM
+function initPoem() {
+  const IDS = ['s1','d1','s2','d2','s3','d3','s4','d4','s5','p-close','p-btn'];
+
+  // Reset
+  IDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.classList.remove('show');
+    el.style.opacity = '0';
+  });
+
+  // Poem background stars
+  const pStars = document.getElementById('poem-stars');
+  if (!pStars.children.length) {
+    for (let i = 0; i < 40; i++) {
+      const s = document.createElement('div');
+      const sz = Math.random() < 0.25 ? 2.5 : 1.5;
+      s.className = 'star';
+      s.style.cssText = `
+        position:absolute;
+        left:${Math.random()*100}%; top:${Math.random()*100}%;
+        width:${sz}px; height:${sz}px;
+        --d:${(2+Math.random()*3.5).toFixed(1)}s;
+        --dl:${(Math.random()*5).toFixed(1)}s;
+      `;
+      pStars.appendChild(s);
+    }
+  }
+
+  // Staggered reveal
+  const SEQ = [
+    { id:'s1',     d:350  },
+    { id:'d1',     d:920  },
+    { id:'s2',     d:1200 },
+    { id:'d2',     d:1770 },
+    { id:'s3',     d:2050 },
+    { id:'d3',     d:2620 },
+    { id:'s4',     d:2900 },
+    { id:'d4',     d:3460 },
+    { id:'s5',     d:3740 },
+    { id:'p-close',d:4440 },
+    { id:'p-btn',  d:5050 },
+  ];
+
+  SEQ.forEach(({ id, d }) => {
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) { el.classList.add('show'); el.style.opacity = '1'; }
+    }, d);
+  });
+}
+
+// PAGE: ABOUT
+function initAbout() {
+  const cards = document.querySelectorAll('.acard');
+  cards.forEach(c => { c.classList.remove('show'); });
+  cards.forEach((c, i) => setTimeout(() => c.classList.add('show'), 80 + i * 95));
+}
+
+// PAGE: METALLICA
+let metalDone = false;
+function initMetal() {
+  if (metalDone) return;
+  metalDone = true;
+
+  const bg = document.getElementById('metal-bg');
+  const NOTES = ['🎵','🎶','🎸','🤘'];
+
+  // Floating music notes
+  for (let i = 0; i < 16; i++) {
+    const n = document.createElement('div');
+    n.className = 'note';
+    n.textContent = NOTES[Math.floor(Math.random() * NOTES.length)];
+    n.style.cssText = `
+      --l:${(4+Math.random()*90).toFixed(1)}%;
+      --sz:${(0.85+Math.random()*0.9).toFixed(2)}rem;
+      --d:${(4.5+Math.random()*5).toFixed(1)}s;
+      --dl:${(Math.random()*7).toFixed(1)}s;
+    `;
+    bg.appendChild(n);
+  }
+
+  // Lightning flashes
+  for (let i = 0; i < 3; i++) {
+    const l = document.createElement('div');
+    l.className = 'lgt';
+    l.style.cssText = `
+      --l:${[15, 50, 82][i]}%;
+      --d:${(4+i*1.5).toFixed(1)}s;
+      --dl:${(i*1.8).toFixed(1)}s;
+    `;
+    bg.appendChild(l);
+  }
+}
+
+// PAGE: FINALE
+let finalDone = false;
+function initFinal() {
+  if (finalDone) return;
+  finalDone = true;
+
+  const row   = document.getElementById('candles');
+  const count = window.innerWidth < 400 ? 9 : 18;
+
+  for (let i = 0; i < count; i++) {
+    const g = document.createElement('div');
+    g.className = 'candle';
+    g.innerHTML = `
+      <div class="flame" style="animation-delay:${(Math.random()*.4).toFixed(2)}s"></div>
+      <div class="wick"></div>
+      <div class="cstick"></div>
+    `;
+    row.appendChild(g);
+  }
+}
+
+function celebrate() {
+  const COLORS = ['#f74b8a','#b91c3a','#ffd054','#ff6600','#ff89c8','#ffffff','#ff3355'];
+  const burst  = (x, y, n = 90) => confetti({ particleCount:n, spread:65, origin:{x,y}, colors:COLORS, gravity:.85, scalar:1.1 });
+
+  burst(.5,  .65);
+  setTimeout(() => burst(.22, .55),  320);
+  setTimeout(() => burst(.78, .55),  620);
+  setTimeout(() => burst(.12, .35),  950);
+  setTimeout(() => burst(.88, .35), 1220);
+  setTimeout(() => confetti({
+    particleCount: 260,
+    spread: 200,
+    origin: { x:.5, y:.22 },
+    colors: COLORS,
+    gravity: .5,
+    scalar: 1.25,
+  }), 1580);
+
+  // Dark-themed bat "confetti" 🦇
+  for (let i = 0; i < 4; i++) {
+    setTimeout(() => confetti({
+      particleCount: 12,
+      spread: 55,
+      origin: { x: Math.random(), y: 0 },
+      colors: ['#1a0008','#380014','#550020'],
+      shapes: ['square'],
+      gravity: .45,
+      scalar: .75,
+    }), i * 280);
+  }
+
+  const btn = document.getElementById('celeb-btn');
+  btn.textContent = 'Happy Birthday Andrea!';
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.textContent = 'Celebrate Again!';
+    btn.disabled = false;
+  }, 5500);
+}
+</script>
+</body>
+</html>
+
+</body></html>
